@@ -1,7 +1,7 @@
 import express, { Response } from 'express'
 import { Login } from './controllers/auth';
 import { CreateCalendar, DeleteCalendar, GetAllCalendars, GetCalendarById, UpdateCalendar } from './controllers/calendar';
-import { CreateUser, DeleteUser, GetAllUsers, GetUserById, GetUserWithCalendars, UpdateUser, UpdateUserCalendars } from './controllers/user';
+import { CreateUser, DeleteUser, GetAllUsers, GetUser, GetUserById, UpdateUser } from './controllers/user';
 
 const router = express.Router();
 
@@ -12,13 +12,14 @@ router
     })
     .post('/login', Login)
     // user routes
+    .get('/user', GetUser)
     .get('/users', GetAllUsers)
     .get('/user/:id', GetUserById)
     .post('/user', CreateUser)
     .put('/user', UpdateUser)
     .delete('/user', DeleteUser)
-    .get('/user/:id/calendar', GetUserWithCalendars)
-    .put('/user/calendar', UpdateUserCalendars)
+    // .get('/user/:id/calendar', GetUserWithCalendars)
+    // .put('/user/calendar', UpdateUserCalendars)
 
     // calendar routes
     .get('/calendars', GetAllCalendars)

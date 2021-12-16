@@ -22,7 +22,7 @@ export function jwtMiddleware(options: { publicUrls: string[] }) {
         }
 
         try {
-            const token = req.get("Authorization").split('Bearer ')
+            const token: string[] = req.get("Authorization").split('Bearer ')
             const payload = verifyJWT(token[1])
 
             // invalid header value or bad JWT
@@ -32,7 +32,7 @@ export function jwtMiddleware(options: { publicUrls: string[] }) {
 
             // jwt is valid
             const prisma = new PrismaClient({ log: ['query'] })
-            const user = await prisma.user.findUnique({ where: { id: payload.userId }, select: { id: true, email: true, role: true } })
+            const user = await prisma.user.findUnique({ where: { id: payload.userId }, select: { id: true, email: true, username: true, role: true } })
             console.log({ user })
             req.user = user
             return next()

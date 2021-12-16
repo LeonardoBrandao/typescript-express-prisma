@@ -11,15 +11,25 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique @db.VarChar(255)
-  password String @db.VarChar(255)
-  role String @db.VarChar(255)
-  calendars Calendar[]
+  id           Int        @id @default(autoincrement())
+  username     String     @db.VarChar(255)
+  email        String     @unique @db.VarChar(255)
+  password     String     @db.VarChar(255)
+  role         Role       @default(Viewer)
+  createdAt    DateTime   @default(now()) @map("created_at")
+  lastActivity DateTime   @default(now()) @map("last_activity")
+  calendars    Calendar[]
+}
+
+enum Role {
+  ChannelAdmin
+  Contributor
+  GeneralAdmin
+  Viewer
 }
 
 model Calendar {
-  id Int @id @default(autoincrement())
-  name String @unique @db.VarChar(255)
+  id    Int    @id @default(autoincrement())
+  name  String @unique @db.VarChar(255)
   users User[]
 }
